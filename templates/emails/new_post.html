@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogApp:New post</title>
+    <style>
+        body{
+            background-color: lightgrey;
+        }
+
+        .container{
+            max-width: 70%;
+            margin: 20px auto;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        header{
+            border-bottom: 2px lightgrey solid;
+            padding: 10px;
+        }
+        header h2{
+            font-size: 20px;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header p{
+            color: #6D6E76;
+            font-size: 12px;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        footer{
+            border-top: 2px lightgrey solid;
+            padding: 10px;
+        }
+        footer p{
+            color: #6D6E76;
+            font-size: 12px;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .post {
+            padding: 30px;
+        }
+
+        .post img {
+            width: 100%;
+            height: auto;
+            max-height: 50vh;
+            object-fit: cover;
+            margin-bottom: 40px;
+        }
+
+        .post-author {
+            color: #4C4C4C;
+            font-weight: 300;
+        }
+
+        .author-username {
+            font-weight: 500;
+            color: #592EA9;
+        }
+
+        .post-title {
+            margin: 25px 0;
+        }
+
+        .post-description {
+            color: #6D6E76;
+            font-size: 14px;
+            font-weight: 300;
+            margin-bottom: 25px;
+        }
+
+        .main-btn {
+            display: inline-block;
+            cursor: pointer;
+
+            color: black;
+            text-decoration: none;
+            background: #FFD050;
+            border: none;
+            padding: 7px 25px;
+
+            font-family: "Sen", sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 30px;
+
+            transition: all 0.3s ease-out;
+        }
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h2>New post by <strong class="author-username">Admin</strong></h2>
+            <p> You have new post created by <strong class="author-username">Admin</strong> that can
+                be interested for you! </p>
+        </header>
+
+        <div class="post">
+            <img src="/static/images/post-view-image.png" alt>
+            <p class="post-author">
+                By <strong class="author-username">Admin</strong> | May 23 2026
+            </p>
+            <h4 class="post-title">Step by step tutorial for Django
+                server</h4>
+            <p class="post-description">Step by step tutorial have to create
+                Django server with email communication with followers</p>
+            <a href="http://127.0.0.1:8000"
+                class="main-btn">Read More ></a>
+        </div>
+
+        <footer>
+            <p>This email sended by BlogApp for you as a follower for
+                Admin</p>
+        </footer>
+    </div>
+</body>
+</html>

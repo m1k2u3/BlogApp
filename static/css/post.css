@@ -1,0 +1,221 @@
+.categories {
+    margin-top: 50px;
+}
+
+.category-list {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.category {
+    padding: 20px;
+    height: 200px;
+    width: 300px;
+    border: 1px solid #F4F4F4;
+    box-shadow: 5px 4px 3px 1px rgba(0, 0, 0, 0.22);
+    -webkit-box-shadow: 5px 4px 3px 1px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 5px 4px 3px 1px rgba(0, 0, 0, 0.22);
+}
+
+.category.selected{
+    background-color: #EDC14A;
+    border-color: #EDC14A;
+}
+
+.category-icon {
+    width: 60px;
+    height: 60px;
+    background-color: #F4F4F4;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.category-icon svg {
+    width: 50px;
+    height: 50px;
+}
+
+.category-description {
+    color: #6D6E76;
+}
+
+.category.active {
+    background-color: #FFD050;
+    border-color: #FFD050;
+}
+
+.category-title {
+    text-wrap: unset;
+    overflow: hidden;
+    height: 40px;
+}
+
+.posts-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.posts-search * {
+    font-family: "Sen", sans-serif;
+    font-style: normal;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+
+.posts-search input {
+    flex: 1;
+    height: 50px;
+    border-radius: 3px;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: 300;
+    background-color: #232536d3;
+}
+
+.posts-search button {
+    cursor: pointer;
+    color: black;
+    background: #FFD050;
+    border: none;
+    padding: 5px;
+    border-radius: 3px;
+    height: 50px;
+    transition: all 0.3s ease-out;
+}
+
+.posts-search button:hover {
+    background-color: #EDC14A;
+    transform: scale(1.05);
+}
+
+.button_number {
+    cursor: pointer;
+    color: black;
+    background: #FFD050;
+    border: none;
+    padding: 5px;
+    border-radius: 3px;
+    width: 70px;
+    height: 70px;
+    transition: all 0.3s ease-out;
+}
+
+.button_number:hover {
+    background-color: #EDC14A;
+    transform: scale(1.05);
+}
+
+.page-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin: 50px 10px;
+}
+
+.page-buttons-info {
+    font-size: 16px;
+    color: #6D6E76;
+}
+
+.page-buttons-list {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-button {
+    padding: 8px 12px;
+    border: 1px solid #6D6E76;
+    color: white;
+    background-color: #232536;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.page-button:hover {
+    background-color: #EDC14A;
+    color: black;
+}
+
+.page-button.disabled {
+    background-color: #6D6E76;
+    cursor: not-allowed;
+}
+
+.page-button.disabled:hover {
+    background-color: #6D6E76;
+    cursor: not-allowed;
+    color: white;
+}
+
+.page-button.selected {
+    background-color: #EDC14A;
+    color: black;
+    cursor: not-allowed;
+}
+
+.posts-search .clear{
+    cursor: pointer;
+
+    color: black;
+    background: lightgrey;
+    border: none;
+    padding: 5px;
+    border-radius: 3px;
+    height: 50px;
+    font-size: 30px;
+    line-height: 40px;
+
+    transition: all 0.3s ease-out;
+}
+
+.posts-search .clear:hover {
+    background-color: rgb(160, 160, 160);
+    transform: scale(1.05);
+}
+
+.category-container{
+    position: relative;
+}
+
+.category {
+    display: block;
+    width: 300px;
+    height: 200px;
+    padding: 20px;
+    border: 1px solid #F4F4F4;
+    box-shadow: 5px 4px 3px 1px rgba(0, 0, 0, 0.22);
+    -webkit-box-shadow: 5px 4px 3px 1px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 5px 4px 3px 1px rgba(0, 0, 0, 0.22);
+}
+
+.category-container .clear{
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    
+    cursor: pointer;
+
+    color: black;
+    background: lightgrey;
+    border: none;
+    padding: 5px;
+    border-radius: 3px;
+    height: 50px;
+    font-size: 30px;
+    line-height: 40px;
+
+    transition: all 0.3s ease-out;
+}
+
+.category-container .clear:hover {
+    background-color: rgb(160, 160, 160);
+    transform: scale(1.05);
+}

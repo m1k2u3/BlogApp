@@ -1,0 +1,457 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>BlogApp:Create Post</title>
+<link rel="stylesheet" href="/static/css/post_details.css" />
+<link rel="stylesheet" href="/static/css/profile.css" />
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="profile-section">
+
+        <div class="profile-header">
+
+            <div class="profile-header-image">
+                <img id="avatar"
+                    src="{% if user.profile.profile_picture %} /media/{{user.profile.profile_picture}} {% else %} /static/images/author.png {% endif %}"
+                    alt>
+                <button id="editImageBtn" onclick="document.getElementById('avatarInput').click()">✏️</button>
+                <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+            </div>
+            <div class="profile-header-details">
+                <input class="username " name="username" type="text" value="{{user.username}}"
+                    placeholder="Create your username here.." />
+                <input class="email " type="email" value="{{user.email}}" name="email"
+                    placeholder="Enter your email here...">
+
+            </div>
+
+            {% if request.user.is_authenticated and user != request.user %}
+            <button class="main-btn" id="subscribeBtn" data-author-id="{{user.id}}">
+                {% if is_subscribed %}
+                    Unsubscribe
+                {% else %}
+                    Subscribe
+                {% endif %}
+            </button>
+            {% endif %}
+            {% if user == request.user %}
+            <button class="main-btn" id="editProfile">Edit</button>
+            {% endif %}
+            <div style="display: none; gap: 20px; align-items: center;" id="confirmButtons">
+                <button class="main-btn" style="background-color: #f09819;" id="calcelEditProfile">Cancel</button>
+                <button class="main-btn" id="saveEditProfile">Save</button>
+            </div>
+        </div>
+        <div class="profile-body">
+
+            <input class="bio profile-body-desc" type="text" value="{{user.bio}}" name="bio"
+                placeholder="Enter your biography here...">
+
+
+            <ul class="profile-body-info">
+                <li>
+                    <p>Posts Count:</p> <strong>{{ posts|length }}</strong>
+                </li>
+                <li>
+                    <p>Vote average:</p>
+                    <div class="vote-avarage">
+                        <strong>{{ vote_avarage }}</strong>
+                        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path
+                                    d="M9.15316 5.40838C10.4198 3.13613 11.0531 2 12 2C12.9469 2 13.5802 3.13612 14.8468 5.40837L15.1745 5.99623C15.5345 6.64193 15.7144 6.96479 15.9951 7.17781C16.2757 7.39083 16.6251 7.4699 17.3241 7.62805L17.9605 7.77203C20.4201 8.32856 21.65 8.60682 21.9426 9.54773C22.2352 10.4886 21.3968 11.4691 19.7199 13.4299L19.2861 13.9372C18.8096 14.4944 18.5713 14.773 18.4641 15.1177C18.357 15.4624 18.393 15.8341 18.465 16.5776L18.5306 17.2544C18.7841 19.8706 18.9109 21.1787 18.1449 21.7602C17.3788 22.3417 16.2273 21.8115 13.9243 20.7512L13.3285 20.4768C12.6741 20.1755 12.3469 20.0248 12 20.0248C11.6531 20.0248 11.3259 20.1755 10.6715 20.4768L10.0757 20.7512C7.77268 21.8115 6.62118 22.3417 5.85515 21.7602C5.08912 21.1787 5.21588 19.8706 5.4694 17.2544L5.53498 16.5776C5.60703 15.8341 5.64305 15.4624 5.53586 15.1177C5.42868 14.773 5.19043 14.4944 4.71392 13.9372L4.2801 13.4299C2.60325 11.4691 1.76482 10.4886 2.05742 9.54773C2.35002 8.60682 3.57986 8.32856 6.03954 7.77203L6.67589 7.62805C7.37485 7.4699 7.72433 7.39083 8.00494 7.17781C8.28555 6.96479 8.46553 6.64194 8.82547 5.99623L9.15316 5.40838Z"
+                                    stroke="#1C274C" stroke-width="1.5"></path>
+                            </g>
+                        </svg>
+                    </div>
+
+                </li>
+                <li>
+                    <p>Subscribers:</p>
+                    <strong id="subscribersCount">{{ subscribers_count }}</strong>
+                    </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    {% if user.is_authenticated %}
+    <div class="posts-section-buttons">
+        <button class="active" id="my-posts-btn">My Posts</button>
+        <button id="favourite-posts-btn"> Favourite Posts </button>
+    </div>
+    {% else %}
+    <h2>Posts</h2>
+    {% endif%}
+    <div class="similar-posts" id="my-posts">
+
+        {% for post in posts %}
+
+
+        <div class="favourite-post" id="post-{{post.id}}">
+            <button class="save-post" onclick="deletePost('{{post.id}}')">
+
+                <svg fill="#000000" width="20px" height="20px" fill="yellow" viewBox="-6.7 0 122.88 122.88"
+                    version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 109.484 122.88"
+                    xml:space="preserve">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <g>
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M2.347,9.633h38.297V3.76c0-2.068,1.689-3.76,3.76-3.76h21.144 c2.07,0,3.76,1.691,3.76,3.76v5.874h37.83c1.293,0,2.347,1.057,2.347,2.349v11.514H0V11.982C0,10.69,1.055,9.633,2.347,9.633 L2.347,9.633z M8.69,29.605h92.921c1.937,0,3.696,1.599,3.521,3.524l-7.864,86.229c-0.174,1.926-1.59,3.521-3.523,3.521h-77.3 c-1.934,0-3.352-1.592-3.524-3.521L5.166,33.129C4.994,31.197,6.751,29.605,8.69,29.605L8.69,29.605z M69.077,42.998h9.866v65.314 h-9.866V42.998L69.077,42.998z M30.072,42.998h9.867v65.314h-9.867V42.998L30.072,42.998z M49.572,42.998h9.869v65.314h-9.869 V42.998L49.572,42.998z">
+                            </path>
+                        </g>
+                    </g>
+
+                </svg>
+            </button>
+
+            <button> <a class="similar-post">
+
+                    <svg class="edit_post" href="{% url 'edit_post' post_id=post.id %}" width="20px" height="20px"
+                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path
+                                d="M15.4998 5.49994L18.3282 8.32837M3 20.9997L3.04745 20.6675C3.21536 19.4922 3.29932 18.9045 3.49029 18.3558C3.65975 17.8689 3.89124 17.4059 4.17906 16.9783C4.50341 16.4963 4.92319 16.0765 5.76274 15.237L17.4107 3.58896C18.1918 2.80791 19.4581 2.80791 20.2392 3.58896C21.0202 4.37001 21.0202 5.63634 20.2392 6.41739L8.37744 18.2791C7.61579 19.0408 7.23497 19.4216 6.8012 19.7244C6.41618 19.9932 6.00093 20.2159 5.56398 20.3879C5.07171 20.5817 4.54375 20.6882 3.48793 20.9012L3 20.9997Z"
+                                stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </g>
+                    </svg></button>
+
+
+
+            <img src="8
+                    {% if post.image %}
+                        {{post.image.url}}
+                    {% else %}
+                        /static/images/image.png
+                    {% endif %}
+                    " alt="">
+            <p class="similar-post-author">
+                By <strong> {{post.author}} </strong> {{post.created_at}}
+            </p>
+            <h4 class="similar-post-title">{{post.title}}</h4>
+            <p class="similar-post-description">{{post.short_description}}</p>
+
+
+
+
+
+            </a>
+        </div>
+
+        {% empty %}
+
+
+        <div class="similar-not-found">
+            <h4>
+                posts not found!
+            </h4>
+            <a href class="main-btn">Create New ></a>
+        </div>
+
+        {% endfor %}
+    </div>
+
+    {% csrf_token %}
+    <div class="similar-posts" style="display: none;" id="favourite-posts">
+        {% for f in favourite_posts%}
+        <div class="favourite-post"> <button onclick="deleteFavouritePost({{f.post.id}},this)" class="save-post">
+
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="60" height="60" {% if is_favourite %}
+                    style="fill: #FFD050;" {% endif %}>
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path
+                            d="M17 3C18.1046 3 19 3.89543 19 5L19 19.0536C19 20.5893 17.341 21.552 16.0077 20.7901L12.9923 19.067C12.3774 18.7157 11.6226 18.7157 11.0077 19.067L7.99228 20.7901C6.65897 21.552 5 20.5893 5 19.0536L5 5C5 3.89543 5.89543 3 7 3L17 3Z"
+                            stroke="#323232" stroke-width="2" stroke-linejoin="round"></path>
+                    </g>
+                </svg>
+            </button>
+
+
+            <div class="similar-post">
+
+
+                <img src="
+                    {% if f.post.image %}
+                        {{f.post.image.url}}
+                    {% else %}
+                        /static/images/image.png
+                    {% endif %}
+                    " alt="">
+                <p class="similar-post-author">
+                    By <strong> {{f.post.author}} </strong> {{f.post.created_at}}
+                </p>
+                <h4 class="similar-post-title">{{f.post.title}}</h4>
+                <p class="similar-post-description">{{f.post.short_description}}</p>
+
+            </div>
+        </div>
+        {% empty %}
+
+
+        <div class="similar-not-found">
+
+            <h4>
+                Favorite posts not found!
+            </h4>
+            <!-- <a href class="main-btn">Create New ></a> -->
+        </div>
+
+        {% endfor %}
+
+
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const myPostsBtn = document.querySelector("#my-posts-btn");
+        const favouritePostsBtn = document.querySelector("#favourite-posts-btn");
+
+        const myPosts = document.querySelector("#my-posts");
+        const favouritePosts = document.querySelector("#favourite-posts");
+
+        const usernameInput = document.querySelector("input.username");
+        const emailInput = document.querySelector("input.email")
+        const bioInput = document.querySelector("input.bio")
+        const editProfileBnt = document.querySelector("button#editProfile");
+        const confirmButtons = document.querySelector("div#confirmButtons");
+        const cancelBtn = confirmButtons.querySelector("#calcelEditProfile");
+        const editImageBtn = document.querySelector("button#editImageBtn");
+        const avatarInput = document.querySelector("input#avatarInput");
+        const avatar = document.querySelector("img#avatar");
+        const saveBtn = confirmButtons.querySelector("#saveEditProfile");
+        const csrfToken = document.querySelector("input[name=csrfmiddlewaretoken]").value;
+       
+
+        if (usernameInput){usernameInput.disabled=true;}
+        if (emailInput){emailInput.disabled=true;}
+        if (bioInput){bioInput.disabled=true;}
+
+
+
+
+        favouritePostsBtn?.addEventListener("click", () => {
+            favouritePostsBtn.classList.add("active")
+            myPostsBtn.classList.remove("active")
+
+            myPosts.style.display = "none";
+            favouritePosts.style.display = "flex"
+        })
+
+        myPostsBtn?.addEventListener("click", () => {
+            myPostsBtn.classList.add("active")
+            favouritePostsBtn.classList.remove("active")
+
+            favouritePosts.style.display = "none";
+            myPosts.style.display = "flex"
+        })
+
+        editProfileBnt?.addEventListener("click", () => {
+            usernameInput.classList.add("editable")
+            usernameInput.disabled = false;
+
+            emailInput.classList.add("editable")
+            emailInput.disabled = false;
+
+            bioInput.classList.add("editable")
+            bioInput.disabled = false;
+
+            editProfileBnt.style.display = "none";
+            confirmButtons.style.display = "flex";
+
+            editImageBtn.classList.add("editable")
+
+
+
+        })
+
+        saveBtn?.addEventListener("click", () => {
+            const formData = new FormData();
+
+            formData.append("username", usernameInput.value);
+            formData.append("email", emailInput.value);
+            formData.append("bio", bioInput.value);
+
+            if (avatarInput.files[0]) {
+                formData.append("avatar", avatarInput.files[0])
+            }
+
+            console.log("UPDATE PROFILE FORM DATA: ", formData);
+
+            fetch("{% url 'edit_profile' %}", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": csrfToken
+                },
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("UPDATE PROFILE RESPONSE: ", data)
+
+                    if (data.status === "success") {
+                        cancelBtn.click();
+
+                        const user = data.user;
+
+                        usernameInput.value = user.username;
+                        emailInput.value = user.email;
+                        bioInput.value = user.bio;
+
+                        if (user.avatar) {
+                            avatar.src = user.avatar
+                        }
+                        avatarInput.value = null;
+                    } else {
+                        alert(data.error || "Something went wrong. Try again later!")
+                    }
+                }).catch((e) => {
+                    console.error("FAILED UPDATE PROFILE:", e);
+                })
+
+        });
+
+        cancelBtn?.addEventListener("click", () => {
+            usernameInput.classList.remove("editable")
+            usernameInput.disabled = true;
+            usernameInput.value = "{{user.username}}";
+
+            emailInput.classList.remove("editable")
+            emailInput.disabled = true;
+            emailInput.value = "{{user.email}}";
+
+            bioInput.classList.remove("editable")
+            bioInput.disabled = true;
+            bioInput.value = "{{user.bio}}";
+            avatar.src = "{% if user.profile.profile_picture %} /media/{{user.profile.profile_picture}} {% else %} /static/images/author.png {% endif %}"
+            editProfileBnt.style.display = "block";
+            confirmButtons.style.display = "none";
+
+            editImageBtn.classList.remove("editable")
+        })
+
+        avatarInput?.addEventListener("change", function () {
+            const file = this.files[0];
+
+            if (file) {
+                avatar.src = URL.createObjectURL(file);
+            }
+        })
+
+        const subscribeBtn = document.querySelector("#subscribeBtn");
+        const subscribersCount = document.querySelector("#subscribersCount");
+    subscribeBtn?.addEventListener("click", () => {
+        const authorId = subscribeBtn.dataset.authorId;
+
+        const url = `/authors/${authorId}/subscribe/toggle/`;
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": csrfToken
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "subscribed") {
+                    subscribeBtn.textContent = "Unsubscribe";
+                    subscribeBtn.style.background = "white";
+                    subscribersCount.textContent = parseInt(subscribersCount.textContent) + 1;
+
+                } else if (data.status === "unsubscribed") {
+                    subscribeBtn.textContent = "Subscribe";
+                    subscribeBtn.style.background = "#FFD050";
+                    subscribersCount.textContent = parseInt(subscribersCount.textContent) - 1;
+                }
+            })
+            .catch(e => {
+                console.log("Failed to subscribe: ", e);
+            })
+    })
+
+    })
+
+
+
+    function deleteFavouritePost(post_id, btn) {
+        console.log("Delete post: ", post_id)
+        const favPost = btn.parentElement;
+        const csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+
+        const url = `/posts/${post_id}/favourite/toggle/`;
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": csrfToken,
+                "Content-Type": "application/json"
+            }
+        }).then(response => {
+            return response.json()
+        }).then(data => {
+            if (data.status === "removed") {
+                favPost.remove()
+            }
+        })
+            .catch(error => {
+                console.error("Failed toggle favourite post: ", error);
+            })
+    }
+
+
+    function deletePost(postId) {
+        const deleteConfirmed = confirm("Do you really want to delete your post?");
+        if (deleteConfirmed) {
+            const csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+
+            const url = `/posts/${postId}/delete/`;
+            fetch(url, {
+                method: "DELETE",
+                headers: {
+                    "X-CSRFToken": csrfToken,
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(response => {
+                    if (response.status === 204) {
+                        const post = document.querySelector(`#post-${postId}`);
+                        if (post) {
+                            post.remove();
+                        }
+                    } else {
+                        console.log("Failed delete post: ", response);
+                        alert("Something went wrong. Please try again later!")
+                    }
+                }).catch(error => {
+                    console.error("Failed delete post: ", error);
+                    alert("Something went wrong. Please try again later!")
+                })
+        }
+    }
+
+
+
+
+
+    
+</script>
+
+
+{%endblock%}

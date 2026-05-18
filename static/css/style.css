@@ -1,0 +1,95 @@
+header{
+   padding: 150px;
+}
+
+
+.header-content {
+    padding: 100px 50px;
+    max-width: 60%;
+    color: white;
+}
+
+.posts-block {
+    margin: 100px 0;
+    display: flex;
+    align-items: flex-start;
+}
+
+.posts-view h3 {
+    margin-bottom: 40px;
+}
+
+.post {
+    border: 1px solid rgb(199, 199, 199);
+    padding: 30px;
+}
+
+.post img {
+    width: 100%;
+    max-height: 350px;
+   
+    object-fit: cover;
+}
+
+.post-author {
+    color: #4C4C4C;
+    font-weight: 300;
+}
+
+.post-author strong {
+    font-weight: 500;
+    color: #592EA9;
+}
+
+.post-title {
+    margin: 25px 0;
+}
+
+.post-description {
+    color: #6D6E76;
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 25px;
+}
+
+.posts-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.posts-list-items {
+    padding: 10px;
+}
+
+.post-list-item {
+    width: 100%;
+    padding: 20px;
+    cursor: pointer;
+
+    transition: all 0.3s ease-in;
+}
+
+.post-list-item:hover {
+    background-color: #FBF6EA;
+}
+.posts-view {
+    width: 65%;
+}
+
+.posts-view .post {
+    display: none;
+}
+
+.post:first-of-type {
+    display: block;
+}
+
+.posts-list {
+    width: 35%;
+}
+
+.post-list-item.active {
+    background-color: #FBF6EA;
+}
